@@ -114,9 +114,6 @@ namespace SimpleDifferenciator
                 {
                     imagesInFolder.Sort(comparer);
                 }
-
-
-
             }
         }
         private void ProduceCSVMethod()
