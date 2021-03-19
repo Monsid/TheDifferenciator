@@ -12,13 +12,18 @@ namespace SimpleDifferenciator
 
         public static Bitmap cropAtRect(this Image b, Rectangle r)
         {
-            Bitmap nb = new Bitmap(r.Width, r.Height);
-            using (Graphics g = Graphics.FromImage(nb))
-            {
-                g.DrawImage(b, -r.X, -r.Y);
-                return nb;
 
-            }
+            Bitmap nb = new Bitmap(r.Width, r.Height);
+            
+                using (Graphics g = Graphics.FromImage(nb))
+                {
+                    g.DrawImage(b, -r.X, -r.Y);
+                    return nb;
+
+                }
+                 // Do something with the Bitmap object
+            
+            
             
         }
 

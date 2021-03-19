@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -118,8 +119,7 @@ namespace SimpleDifferenciator
 
             }
         }
-
-        private void ProduceCSV_Click(object sender, EventArgs e)
+        private void ProduceCSVMethod()
         {
             float pixelBrightness = float.Parse(selectedPixelBrightness.Text);
             //each collumn should be a list -- this is to avoid using CSV helper and have to make objects.
@@ -133,36 +133,90 @@ namespace SimpleDifferenciator
 
             foreach (string img in imagesInFolder)
             {
-
-                int startX = int.Parse(centerPositionX.Text);
+                int totalwidth;
+                using (Bitmap realimg = new Bitmap(img))
+                {
+                    totalwidth = realimg.Width;
+                }
+                int height = int.Parse(cropSquare.Text);
                 int startY = int.Parse(centerPositionY.Text);
+                int startX1 = 1;
+                int startX2 = totalwidth / 4;
+                int startX3 = startX2 + (totalwidth / 4); // purposely too much divided
+                int startX4 = startX3 + (totalwidth / 4);
                 //crop and draw
-                Rectangle rect = new Rectangle(startX-(int.Parse(cropSquare.Text)/2), startY - (int.Parse(cropSquare.Text) / 2), int.Parse(cropSquare.Text), int.Parse(cropSquare.Text));
+                Rectangle rect1 = new Rectangle(startX1, startY, startX2, height);
+                Rectangle rect2 = new Rectangle(startX2, startY, startX3 - startX2, height);
+                Rectangle rect3 = new Rectangle(startX3, startY, startX4 - startX3, height);
 
-                Bitmap crop = ImgKit.cropAtRect(new Bitmap(img), rect);
+                float totalScore = 0;
 
-                if (ImgKit.isWet((float)pixelBrightness, crop))
+                using (Bitmap realimg = new Bitmap(img))
                 {
-                    csvList.Add(img + "," + "Wet" + "," + ImgKit.AveragePixelsBlack(crop.Width, crop.Height, crop));
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect1))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop1.jpg");
+                        count++;
+                        totalScore = totalScore + ImgKit.AveragePixelsBlack(crop.Width, crop.Height, crop);
+                    }
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect2))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop2.jpg");
+                        count++;
+                        totalScore = totalScore + ImgKit.AveragePixelsBlack(crop.Width, crop.Height, crop);
+                    }
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect3))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop3.jpg");
+                        count++;
+                        totalScore = totalScore + ImgKit.AveragePixelsBlack(crop.Width, crop.Height, crop);
+                    }
+
+                    float pixelScore = totalScore / 3;
+
+
+
+
+
+                    if (pixelScore < float.Parse(selectedPixelBrightness.Text))
+                    {
+                        csvList.Add(img + "," + "Wet" + "," + pixelScore);
+                    }
+                    else
+                    {
+                        csvList.Add(img + "," + "Dry" + "," + pixelScore);
+                    }
+                    count++;
+
+
                 }
-                else
-                {
-                    csvList.Add(img + "," + "Dry" + "," + ImgKit.AveragePixelsBlack(crop.Width, crop.Height, crop));
-                }
-                crop.Save(outputFolderPath + "\\" + count + "crop.jpg");
-                crop.Dispose();
-                count++;
             }
+
             //list is produced in variable currentOCRResults --- ensure to clear before resetting
-            var saveFile = outputFolderPath  + "\\DifferentiatorFile.csv";
+            var saveFile = outputFolderPath + "\\DifferentiatorFile.csv";
             File.WriteAllLines(saveFile, csvList);
             GC.Collect();
+        }
+            Thread thread;
+        void StartCsv()
+        {
+               thread = new Thread(ProduceCSVMethod);
+               thread.Start();
+        }
+        void StartTest()
+        {
+            thread = new Thread(TestCropRun);
+            thread.Start();
+        }
 
+
+        private void ProduceCSV_Click(object sender, EventArgs e)
+        {
+            StartCsv();
         }
         string outputFolderPath = "";
         private void FolderBrowseOutput_Click(object sender, EventArgs e)
         {
-            
             FolderBrowserDialog folderDlg = new FolderBrowserDialog();
             folderDlg.ShowNewFolderButton = true;
             // Show the FolderBrowserDialog.  
@@ -173,30 +227,74 @@ namespace SimpleDifferenciator
                 Environment.SpecialFolder root = folderDlg.RootFolder;
                 outputFolderPath = folderDlg.SelectedPath;
             }
-            
-
-
-            
         }
 
         private void TestCrop_Click(object sender, EventArgs e)
+        {
+            StartTest();
+        }
+        public void TestCropRun()
         {
             int count = 0;
 
             foreach (string img in imagesInFolder)
             {
-
-                int startX = int.Parse(centerPositionX.Text);
+                int totalwidth;
+                using (Bitmap realimg = new Bitmap(img))
+                {
+                    totalwidth = realimg.Width;
+                }
+                int height = int.Parse(cropSquare.Text);
                 int startY = int.Parse(centerPositionY.Text);
+                int startX1 = 1;
+                int startX2 = totalwidth / 5;
+                int startX3 = startX2 + (totalwidth / 5);
+                int startX4 = startX3 + (totalwidth / 5);
+                int startX5 = startX4 + (totalwidth / 5);
                 //crop and draw
-                Rectangle rect = new Rectangle(startX - (int.Parse(cropSquare.Text) / 2), startY - (int.Parse(cropSquare.Text) / 2), int.Parse(cropSquare.Text), int.Parse(cropSquare.Text));
+                Rectangle rect1 = new Rectangle(startX1, startY, startX2, height);
+                Rectangle rect2 = new Rectangle(startX2, startY, startX3, height);
+                Rectangle rect3 = new Rectangle(startX3, startY, startX4, height);
+                Rectangle rect4 = new Rectangle(startX4, startY, startX5, height);
+                Rectangle rect5 = new Rectangle(startX5, startY, totalwidth, height);
 
-                Bitmap crop = ImgKit.cropAtRect(new Bitmap(img), rect);
-                crop.Save(outputFolderPath + "\\" + count + "crop.jpg");
-                crop.Dispose();
-                count++;
+                
+                using (Bitmap realimg = new Bitmap(img))
+                {
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect1))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop1.jpg");
+                        count++;
+                    }
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect2))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop2.jpg");
+                        count++;
+                    }
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect3))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop3.jpg");
+                        count++;
+                    }
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect4))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop4.jpg");
+                        count++;
+                    }
+                    using (Bitmap crop = ImgKit.cropAtRect(realimg, rect5))
+                    {
+                        crop.Save(outputFolderPath + "\\" + count + "crop.jpg");
+                        count++;
+                    }
+                }
             }
             GC.Collect();
+        }
+
+        private void StopProcesses_Click(object sender, EventArgs e)
+        {
+            thread.Abort();
+
         }
     }
 }

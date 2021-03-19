@@ -48,6 +48,8 @@ namespace SimpleDifferenciator
             this.selectedPixelBrightness = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.StopProcesses = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -89,7 +91,6 @@ namespace SimpleDifferenciator
             // 
             // folderPath
             // 
-            this.folderPath.Enabled = false;
             this.folderPath.Location = new System.Drawing.Point(204, 156);
             this.folderPath.Name = "folderPath";
             this.folderPath.Size = new System.Drawing.Size(371, 20);
@@ -156,7 +157,6 @@ namespace SimpleDifferenciator
             // 
             // foldernameOutput
             // 
-            this.foldernameOutput.Enabled = false;
             this.foldernameOutput.Location = new System.Drawing.Point(204, 205);
             this.foldernameOutput.Name = "foldernameOutput";
             this.foldernameOutput.Size = new System.Drawing.Size(371, 20);
@@ -215,11 +215,33 @@ namespace SimpleDifferenciator
             this.label8.TabIndex = 28;
             this.label8.Text = "float with which 0 means pure black 1 means pure white";
             // 
+            // StopProcesses
+            // 
+            this.StopProcesses.Location = new System.Drawing.Point(402, 279);
+            this.StopProcesses.Name = "StopProcesses";
+            this.StopProcesses.Size = new System.Drawing.Size(154, 23);
+            this.StopProcesses.TabIndex = 29;
+            this.StopProcesses.Text = "Stop Process";
+            this.StopProcesses.UseVisualStyleBackColor = true;
+            this.StopProcesses.Click += new System.EventHandler(this.StopProcesses_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(60, 250);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(461, 13);
+            this.label9.TabIndex = 30;
+            this.label9.Text = "This programmer was lazy, use the file explorer in view mode to check crops are i" +
+    "n correct region";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(602, 317);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.StopProcesses);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.selectedPixelBrightness);
             this.Controls.Add(this.label7);
@@ -240,7 +262,7 @@ namespace SimpleDifferenciator
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Differenciate Wet and Dry";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,6 +289,8 @@ namespace SimpleDifferenciator
         private System.Windows.Forms.TextBox selectedPixelBrightness;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button StopProcesses;
+        private System.Windows.Forms.Label label9;
     }
 }
 

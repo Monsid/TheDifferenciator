@@ -1,0 +1,1 @@
+.\azcopy copy "C:\Users\Mario Pereira\Documents\imago-etl\src\Imago.Etl.Wpf\bin\Debug\netcoreapp3.1"  "https://imagomigrate.file.core.windows.net/client/ETLdev?sv=2019-12-12&ss=bfqt&srt=sco&sp=rwdlacupx&se=2021-06-01T10:12:05Z&st=2020-12-20T02:12:05Z&spr=https&sig=awcCOby00Q4vASwibH9kJgQK6lFlY739fweDhlKBOz0%3D" --recursive
