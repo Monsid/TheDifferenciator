@@ -1,0 +1,10 @@
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.csprojAssemblyReference.cache
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.Form1.resources
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.Properties.Resources.resources
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.csproj.GenerateResource.cache
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.csproj.CoreCompileInputs.cache
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\bin\Debug\SimpleDifferenciator.exe.config
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\bin\Debug\SimpleDifferenciator.exe
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\bin\Debug\SimpleDifferenciator.pdb
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.exe
+C:\Users\TKand\Documents\SimpleDifferenciator\SimpleDifferenciator\obj\Debug\SimpleDifferenciator.pdb
